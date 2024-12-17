@@ -26,11 +26,14 @@ object Day7 {
             total == this.result
         }
 
-    internal fun Equation.validateWithConcat(): Boolean {
-        val operatorCombos = (0..<3f.pow(this.nums.size - 1).toInt()).map {
-            it.toBase3().padStart(this.nums.size - 1, '0').replace("0", "+").replace("1", "*").replace("2", "|")
-        }
-        return operatorCombos.any { combo ->
+    internal fun Equation.validateWithConcat(): Boolean =
+        (0..<3f.pow(this.nums.size - 1).toInt()).map {
+        it.toBase3()
+            .padStart(this.nums.size - 1, '0')
+            .replace("0", "+")
+            .replace("1", "*")
+            .replace("2", "|")
+        }.any { combo ->
             var total = this.nums.first().toLong()
             combo.forEachIndexed { index, op ->
                 when (op) {
@@ -41,7 +44,6 @@ object Day7 {
             }
             total == this.result
         }
-    }
 
     internal fun Int.toBase3(): String {
         var cur = this
@@ -54,7 +56,7 @@ object Day7 {
     }
 
     fun part1(): Long = parseInput().filter { it.validate() }.sumOf { it.result }
-    fun part2() = parseInput().filter { it.validateWithConcat() }.sumOf { it.result }
+    fun part2(): Long = parseInput().filter { it.validateWithConcat() }.sumOf { it.result }
 }
 
 fun main() {
