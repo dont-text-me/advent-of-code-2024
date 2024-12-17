@@ -14,13 +14,13 @@ object Day7 {
     }
 
     internal fun Equation.validate(): Boolean = (0..<2f.pow(this.nums.size - 1).toInt())
-        .map { Integer.toBinaryString(it).padStart(this.nums.size - 1, '0').replace("0", "+").replace("1", "*") }
+        .map { Integer.toBinaryString(it).padStart(this.nums.size - 1, '0') }
         .any { combo ->
             var total = this.nums.first().toLong()
             combo.forEachIndexed { index, op ->
                 when (op) {
-                    '*' -> total *= this.nums[index + 1].toLong()
-                    '+' -> total += this.nums[index + 1].toLong()
+                    '0' -> total *= this.nums[index + 1].toLong()
+                    '1' -> total += this.nums[index + 1].toLong()
                 }
             }
             total == this.result
@@ -30,16 +30,13 @@ object Day7 {
         (0..<3f.pow(this.nums.size - 1).toInt()).map {
         it.toBase3()
             .padStart(this.nums.size - 1, '0')
-            .replace("0", "+")
-            .replace("1", "*")
-            .replace("2", "|")
         }.any { combo ->
             var total = this.nums.first().toLong()
             combo.forEachIndexed { index, op ->
                 when (op) {
-                    '*' -> total *= this.nums[index + 1].toLong()
-                    '+' -> total += this.nums[index + 1].toLong()
-                    '|' -> total = "$total${this.nums[index + 1]}".toLong()
+                    '0' -> total *= this.nums[index + 1].toLong()
+                    '1' -> total += this.nums[index + 1].toLong()
+                    '2' -> total = "$total${this.nums[index + 1]}".toLong()
                 }
             }
             total == this.result
